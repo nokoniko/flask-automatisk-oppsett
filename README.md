@@ -12,19 +12,23 @@ Før du kjører skriptet, sørg for at du har følgende installert på systemet 
 
 ## Bruk
 
-1.  **Gjør skriptet kjørbart:**
+1. **last ned med å gjøre**
+   ```bash
+   git clone https://github.com/nokoniko/flask-automatisk-oppsett.git
+   ```
+2.  **Gjør skriptet kjørbart:**
     Åpne en terminal og naviger til mappen der `flask.sh` ligger. Kjør følgende kommando for å gi skriptet kjøretillatelser:
     ```bash
     chmod +x flask.sh
     ```
 
-2.  **Kjør skriptet:**
+3.  **Kjør skriptet:**
     Start skriptet ved å kjøre:
     ```bash
     ./flask.sh
     ```
 
-3.  **Oppgi prosjektnavn:**
+4.  **Oppgi prosjektnavn:**
     Du vil bli bedt om å skrive inn et navn for prosjektmappen. Skriv inn ønsket navn og trykk `Enter`.
 
 ## Hva skriptet genererer
