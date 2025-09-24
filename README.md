@@ -1,6 +1,6 @@
 # Flask Prosjektstarter Skript
 
-Dette skriptet automatiserer oppsettet av et grunnleggende Flask-prosjekt. Det lager en prosjektmappe, setter opp et virtuelt miljø, installerer nødvendige pakker og genererer standardfiler for å komme raskt i gang med utviklingen.
+Dette skriptet automatiserer oppsettet av et grunnleggende Flask-prosjekt. Det lager en prosjektmappe, setter opp et virtuelt miljø, installerer pakker, genererer standardfiler, og kan initialisere et Git-repository og koble det til GitHub.
 
 ## Forutsetninger
 
@@ -9,6 +9,7 @@ Før du kjører skriptet, sørg for at du har følgende installert på systemet 
 -   `zsh` (eller en annen kompatibel shell som kan kjøre skriptet)
 -   `python3`
 -   `pip`
+-   `gh` (GitHub CLI) - for automatisk opprettelse av repository på GitHub.
 
 ## Bruk
 
@@ -29,7 +30,7 @@ Før du kjører skriptet, sørg for at du har følgende installert på systemet 
     ```
 
 4.  **Oppgi prosjektnavn:**
-    Du vil bli bedt om å skrive inn et navn for prosjektmappen. Skriv inn ønsket navn og trykk `Enter`.
+    Du vil bli bedt om å skrive inn et navn for prosjektmappen og om du vil sette opp Git.
 
 ## Hva skriptet genererer
 

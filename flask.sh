@@ -1,11 +1,16 @@
 #!/usr/bin/env zsh
 
-echo "Hva skal mappen hete?"
+# spør om navn på prosjekt
+echo "Hva skal mappen/prosjetet hete: "
 read fil
+echo "Vil du at den skall sette opp git for deg(y/n):"
+read gitvalg
+
+fil_navn="${fil// /-}"
 
 # Lag prosjektmappe
-mkdir $fil
-cd $fil
+mkdir $fil_navn
+cd $fil_navn
 
 # Lag undermapper
 mkdir -p static/css
@@ -103,3 +108,22 @@ htmlcov/
 .env
 .env.*
 EOF
+
+# github repo
+if [ "$gitvalg" = "y" ]; then
+    git init
+    git add .
+    git commit -m "Initielt Flask-prosjekt"
+
+    while true; do
+        echo "Vil du ha GitHub repo som public eller private? "
+        read visibility
+        if [ "$visibility" = "public" ] || [ "$visibility" = "private" ]; then
+            break
+        else
+            echo "Skriv 'public' eller 'private'."
+        fi
+    done
+
+    gh repo create "$fil_navn" --$visibility --source=. --remote=origin --push
+fi
