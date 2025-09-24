@@ -123,4 +123,9 @@ if [ "$gitvalg" = "y" ]; then
     done
 
     gh repo create "$fil_navn" --$visibility --source=. --remote=origin --push
+    
+    echo "lagdt $fil_navn og lagt det ut på github som et $visibility repo."
+
+elif [ "$gitvlag" = "n" ]; then
+    echo "lagt $fil_navn ferdig!"
 fi
