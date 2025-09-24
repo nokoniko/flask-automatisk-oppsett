@@ -1,9 +1,9 @@
 #!/usr/bin/env zsh
 
 # spør om navn på prosjekt
-echo "Hva skal mappen/prosjetet hete: "
+echo "Hva skal mappen/prosjetet hete:"
 read fil
-echo "Vil du at den skall sette opp git for deg(y/n):"
+echo "Vil du at den skall sette opp git for deg (y/n):"
 read gitvalg
 
 fil_navn="${fil// /-}"
@@ -13,10 +13,7 @@ mkdir $fil_navn
 cd $fil_navn
 
 # Lag undermapper
-mkdir -p static/css
-mkdir -p static/img
-mkdir -p db
-mkdir -p templates
+mkdir -p static/{css,img} db templates
 
 # Sett opp virtuell miljø
 python3 -m venv .venv
