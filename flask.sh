@@ -9,6 +9,8 @@ cd $fil
 
 # Lag undermapper
 mkdir -p static/css
+mkdir -p static/img
+mkdir -p db
 mkdir -p templates
 
 # Sett opp virtuell miljø
