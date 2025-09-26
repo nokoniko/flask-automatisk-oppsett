@@ -1,32 +1,38 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # spør om navn på prosjekt
-echo "Hva skal mappen/prosjetet hete:"
+echo "Hva skal mappen/prosjektet hete:"
 read fil
-echo "Vil du at den skall sette opp git for deg (y/n):"
+echo "Vil du at den skal sette opp git for deg (y/n):"
 read gitvalg
-echo "Vil du ha en config folder med .env"
+echo "Vil du ha en config-folder med .env (y/n):"
 read env
 
-fil_navn="${fil// /-}"
+# erstatt mellomrom med bindestrek
+fil_navn=$(echo "$fil" | sed 's/ /-/g')
 
 # Lag prosjektmappe
-mkdir $fil_navn
-cd $fil_navn
+mkdir -p "$fil_navn"
+cd "$fil_navn" || exit 1
 
 # Sett opp virtuell miljø
-python3 -m venv .venv
-source .venv/bin/activate
+if command -v python3 >/dev/null 2>&1; then
+    python3 -m venv .venv || { echo "Kunne ikke lage venv"; exit 1; }
+    source .venv/bin/activate
+else
+    echo "python3 ikke funnet! Avbryter."
+    exit 1
+fi
 
-# Lag undermapper
+# Lag undermapper + pip install
 if [ "$env" = "y" ]; then
-    mkdir -p static/{css,img, js} db templates config
+    mkdir -p static/{css,img,js} db templates config
     pip install flask flask-sqlalchemy python-dotenv
     cat <<EOF > config/.env
 # Her har du alle api nøkklene dine
 EOF
-elif [ "$env" = "n" ]; then
-    mkdir -p static/{css,img, js} db templates
+else
+    mkdir -p static/{css,img,js} db templates
     pip install flask flask-sqlalchemy
 fi
 
@@ -55,6 +61,11 @@ body {
 h1 {
     color: #333;
 }
+EOF
+
+# lager JS-fil
+cat <<EOF > static/js/main.js
+// javascript fil
 EOF
 
 # Lag HTML-template
@@ -86,7 +97,7 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Flask instance folder (database, config, uploads)
+# Flask instance folder
 instance/
 *.db
 *.sqlite3
@@ -97,7 +108,7 @@ instance/
 # MacOS systemfiler
 .DS_Store
 
-# config flder for api
+# config folder for api
 config/.env
 
 # IDE/Editor filer
@@ -127,17 +138,23 @@ EOF
     while true; do
         echo "Vil du ha GitHub repo som public eller private? "
         read visibility
-    if [ "$visibility" = "public" ] || [ "$visibility" = "private" ]; then
+        if [ "$visibility" = "public" ] || [ "$visibility" = "private" ]; then
             break
         else
             echo "Skriv 'public' eller 'private'."
         fi
     done
 
-    gh repo create "$fil_navn" --$visibility --source=. --remote=origin --push
-    
-    echo "lagdt $fil_navn og lagt det ut på github som et $visibility repo."
-
-elif [ "$gitvalg" = "n" ]; then
-    echo "lagt $fil_navn ferdig!"
+    if command -v gh >/dev/null 2>&1; then
+        if ! gh auth status >/dev/null 2>&1; then
+            echo "Du må logge inn i GitHub CLI først: gh auth login"
+            exit 1
+        fi
+        gh repo create "$fil_navn" --"$visibility" --source=. --remote=origin --push
+        echo "Lagde $fil_navn og pushet til GitHub som et $visibility repo."
+    else
+        echo "GitHub CLI (gh) er ikke installert. Hopper over GitHub-oppsett."
+    fi
+else
+    echo "Lagde $fil_navn ferdig!"
 fi
