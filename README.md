@@ -1,6 +1,9 @@
-# Flask Prosjektstarter Skript
+# Flask Prosjektstarter-skript
 
-Dette skriptet automatiserer oppsettet av et grunnleggende Flask-prosjekt. Det lager en prosjektmappe, setter opp et virtuelt miljø, installerer pakker, genererer standardfiler, og kan initialisere et Git-repository og koble det til GitHub.
+Dette repoet inneholder to skript for å automatisere oppsettet av et Flask-prosjekt.
+
+-   `full_flask.sh`: Et omfattende skript som setter opp et komplett prosjekt med virtuelt miljø, avhengigheter, valgfri Git-integrasjon med GitHub, og en konfigurasjonsmappe.
+-   `basic_flask.sh`: Et minimalistisk skript som kun lager den grunnleggende mappestrukturen og de nødvendige filene for en enkel Flask-app.
 
 ## Forutsetninger
 
@@ -9,7 +12,7 @@ Før du kjører skriptet, sørg for at du har følgende installert på systemet 
 -   `zsh` (eller en annen kompatibel shell som kan kjøre skriptet)
 -   `python3`
 -   `pip`
--   `gh` (GitHub CLI) - for automatisk opprettelse av repository på GitHub.
+-   `gh` (GitHub CLI) - *kun nødvendig for `full_flask.sh` hvis du vil opprette et GitHub-repo automatisk.*
 
 ## Bruk
 
@@ -20,21 +23,28 @@ Før du kjører skriptet, sørg for at du har følgende installert på systemet 
 2.  **Gjør skriptet kjørbart:**
     Åpne en terminal og naviger til mappen der `flask.sh` ligger. Kjør følgende kommando for å gi skriptet kjøretillatelser:
     ```bash
-    chmod +x flask.sh
+    chmod +x full_flask.sh basic_flask.sh
     ```
 
 3.  **Kjør skriptet:**
-    Start skriptet ved å kjøre:
+    Velg det skriptet som passer best for ditt behov.
+
+    **For et komplett oppsett:**
     ```bash
-    ./flask.sh
+    ./full_flask.sh
     ```
+    Dette skriptet vil spørre deg om prosjektnavn, om du vil initialisere Git, og om du trenger en `.env`-fil for konfigurasjon.
 
-4.  **Oppgi prosjektnavn:**
-    Du vil bli bedt om å skrive inn et navn for prosjektmappen og om du vil sette opp Git.
+    **For et basisoppsett:**
+    ```bash
+    ./basic_flask.sh
+    ```
+    Dette skriptet vil kun spørre om prosjektnavn.
 
-## Hva skriptet genererer
+## Hva skriptene genererer
 
-Skriptet vil opprette en ny mappe med navnet du anga, og fylle den med følgende struktur og filer:
+### `full_flask.sh`
+Dette skriptet setter opp en mer komplett struktur, klar for videre utvikling.
 
 ```
 ditt-prosjektnavn/
