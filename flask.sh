@@ -5,6 +5,8 @@ echo "Hva skal mappen/prosjetet hete:"
 read fil
 echo "Vil du at den skall sette opp git for deg (y/n):"
 read gitvalg
+echo "Vil du ha en config folder med .env"
+read env
 
 fil_navn="${fil// /-}"
 
@@ -12,15 +14,21 @@ fil_navn="${fil// /-}"
 mkdir $fil_navn
 cd $fil_navn
 
-# Lag undermapper
-mkdir -p static/{css,img} db templates config
-
 # Sett opp virtuell miljø
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Installer pakker
-pip install flask flask-sqlalchemy python-dotenv
+# Lag undermapper
+if [ "$env" = "y" ]; then
+    mkdir -p static/{css,img, js} db templates config
+    pip install flask flask-sqlalchemy python-dotenv
+    cat <<EOF > config/.env
+# Her har du alle api nøkklene dine
+EOF
+elif [ "$env" = "n" ]; then
+    mkdir -p static/{css,img, js} db templates
+    pip install flask flask-sqlalchemy
+fi
 
 # Lag app.py
 cat > app.py << 'EOF'
@@ -66,10 +74,6 @@ cat <<EOF > templates/index.html
     <h1>Flask nettside</h1>
 </body>
 </html>
-EOF
-
-cat <<EOF > config/.env
-# Her har du alle api nøkklene dine
 EOF
 
 # github repo
