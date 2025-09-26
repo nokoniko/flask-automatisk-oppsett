@@ -126,7 +126,7 @@ EOF
     while true; do
         echo "Vil du ha GitHub repo som public eller private? "
         read visibility
-        if [ "$visibility" = "public" ] || [ "$visibility" = "private" ] || [ "$visibility" = "priv" ] || [ "$visibility" = "privat" ]; then
+    if [ "$visibility" = "public" ] || [ "$visibility" = "private" ] || [ "$visibility" = "priv" ] || [ "$visibility" = "privat" ]; then
             break
         else
             echo "Skriv 'public' eller 'private'."
