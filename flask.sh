@@ -13,18 +13,22 @@ mkdir $fil_navn
 cd $fil_navn
 
 # Lag undermapper
-mkdir -p static/{css,img} db templates
+mkdir -p static/{css,img} db templates config
 
 # Sett opp virtuell miljø
 python3 -m venv .venv
 source .venv/bin/activate
 
 # Installer pakker
-pip install flask flask-sqlalchemy
+pip install flask flask-sqlalchemy python-dotenv
 
 # Lag app.py
 cat > app.py << 'EOF'
+import os
 from flask import Flask, render_template
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 
@@ -64,7 +68,13 @@ cat <<EOF > templates/index.html
 </html>
 EOF
 
-cat <<EOF > .gitignore
+cat <<EOF > config/.env
+# Her har du alle api nøkklene dine
+EOF
+
+# github repo
+if [ "$gitvalg" = "y" ]; then
+    cat <<EOF > .gitignore
 # Virtual environment
 .venv/
 venv/
@@ -86,6 +96,9 @@ instance/
 # MacOS systemfiler
 .DS_Store
 
+# config flder for api
+config/.env
+
 # IDE/Editor filer
 .vscode/
 .idea/
@@ -106,8 +119,6 @@ htmlcov/
 .env.*
 EOF
 
-# github repo
-if [ "$gitvalg" = "y" ]; then
     git init
     git add .
     git commit -m "Initielt Flask-prosjekt"
@@ -115,7 +126,7 @@ if [ "$gitvalg" = "y" ]; then
     while true; do
         echo "Vil du ha GitHub repo som public eller private? "
         read visibility
-        if [ "$visibility" = "public" ] || [ "$visibility" = "private" ]; then
+        if [ "$visibility" = "public" ] || [ "$visibility" = "private" ] || [ "$visibility" = "priv" ] || [ "$visibility" = "privat" ]; then
             break
         else
             echo "Skriv 'public' eller 'private'."
@@ -126,6 +137,6 @@ if [ "$gitvalg" = "y" ]; then
     
     echo "lagdt $fil_navn og lagt det ut på github som et $visibility repo."
 
-elif [ "$gitvlag" = "n" ]; then
+elif [ "$gitvalg" = "n" ]; then
     echo "lagt $fil_navn ferdig!"
 fi
