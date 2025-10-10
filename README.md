@@ -53,6 +53,7 @@ ditt-prosjektnavn/
 │   └── css/
 │       └── style.css       # Enkel CSS-fil for styling
 ├── templates/
+│   └── base.html           # base filen for HTML-template
 │   └── index.html          # Grunnleggende HTML-template
 ├── .gitignore              # Standard .gitignore for Python/Flask-prosjekter
 └── app.py                  # Enkel Flask-applikasjon med én rute
@@ -64,9 +65,5 @@ Når skriptet er ferdig, er prosjektet ditt klart.
 
 1.  Naviger inn i den nye prosjektmappen: `cd <ditt-prosjektnavn>`
 2.  Det virtuelle miljøet er allerede aktivert av skriptet.
-3.  Start Flask-utviklingsserveren ved å kjøre: `flask run` eller `python3 app.py`
+3.  Start Flask-utviklingsserveren ved å kjøre: `python3 app.py`
 4.  Åpne nettleseren din og gå til `http://127.0.0.1:5000` for å se den nyopprettede nettsiden.
-
-
-## Kilder
-gemini for å lage README.md og chatgpt til å gi meg alt får å ha i .gitignore

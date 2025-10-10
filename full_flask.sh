@@ -69,19 +69,39 @@ cat <<EOF > static/js/main.js
 EOF
 
 # Lag HTML-template
-cat <<EOF > templates/index.html
+
+cat <<EOF > templates/base.html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <title>Flask</title>
-</head>
-<body>
-    <h1>Flask nettside</h1>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+    <body>
+        <div>
+            <header>Min flask nettside</header>
+            <nav>
+                <a href="/">hejm hjem</a>
+                <a href="/home">hjem</a>
+                <a href="/contact">kontakt</a>
+                <a href="/about">om</a>
+            </nav>
+        </div>
+        {% block content %}{% endblock %}
+    </body>
 </html>
+EOF
+
+cat <<EOF > templates/index.html
+{% extends "base.html"%}
+
+{% block title  %}index{% endblock %}
+
+{% block content %}
+<p>Dett er inex jajaj</p>
+{% endblock %}
 EOF
 
 # github repo
